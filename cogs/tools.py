@@ -6,6 +6,7 @@ import time
 import random
 import base64
 import aiohttp
+import asyncio
 import discord
 import hashlib
 import warnings
@@ -119,9 +120,9 @@ class Commands(commands.Cog):
             try:
                 await message.delete()
             except:
-                pass
-        print(
-            f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[Clear] {colorama.Fore.RESET}Deleted {amount} messages in {ctx.guild}")
+                await asyncio.sleep(10)
+                await message.delete()
+        print(f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[Clear] {colorama.Fore.RESET}Deleted {amount} messages in {ctx.guild}")
 
     @commands.command()
     async def ping(self, ctx):
