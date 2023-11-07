@@ -32,26 +32,26 @@ class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # @commands.Cog.listener()
-    # async def on_command_error(self, ctx: commands.Context, error: commands.CommandError):
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx: commands.Context, error: commands.CommandError):
         
-    #     now = datetime.now()
-    #     current_time = now.strftime("%H:%M")
+        now = datetime.now()
+        current_time = now.strftime("%H:%M")
         
-    #     if isinstance(error, commands.CommandOnCooldown):
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET} Cooldown: {round(error.retry_after, 1)} seconds"
-    #     elif isinstance(error, commands.MissingPermissions):
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing permissions"
-    #     elif isinstance(error, commands.MissingRequiredArgument):
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing a required argument: {error.param}"
-    #     elif isinstance(error, commands.ConversionError):
-    #         message = str(error)
-    #     elif isinstance(error, commands.CommandNotFound):
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Command not found"
-    #     else:
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Unable to debug"
+        if isinstance(error, commands.CommandOnCooldown):
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET} Cooldown: {round(error.retry_after, 1)} seconds"
+        elif isinstance(error, commands.MissingPermissions):
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing permissions"
+        elif isinstance(error, commands.MissingRequiredArgument):
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing a required argument: {error.param}"
+        elif isinstance(error, commands.ConversionError):
+            message = str(error)
+        elif isinstance(error, commands.CommandNotFound):
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Command not found"
+        else:
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Unable to debug"
 
-    #     print(message)
+        print(message)
     
     @bot.event
     async def on_command(ctx):
