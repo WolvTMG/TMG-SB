@@ -32,26 +32,26 @@ class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx: commands.Context, error: commands.CommandError):
+    # @commands.Cog.listener()
+    # async def on_command_error(self, ctx: commands.Context, error: commands.CommandError):
         
-        now = datetime.now()
-        current_time = now.strftime("%H:%M")
+    #     now = datetime.now()
+    #     current_time = now.strftime("%H:%M")
         
-        if isinstance(error, commands.CommandOnCooldown):
-            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET} Cooldown: {round(error.retry_after, 1)} seconds"
-        elif isinstance(error, commands.MissingPermissions):
-            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}No perm nigga"
-        elif isinstance(error, commands.MissingRequiredArgument):
-            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing a required argument: {error.param}"
-        elif isinstance(error, commands.ConversionError):
-            message = str(error)
-        elif isinstance(error, commands.CommandNotFound):
-            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Command not found"
-        else:
-            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Unable to debug"
+    #     if isinstance(error, commands.CommandOnCooldown):
+    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET} Cooldown: {round(error.retry_after, 1)} seconds"
+    #     elif isinstance(error, commands.MissingPermissions):
+    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing permissions"
+    #     elif isinstance(error, commands.MissingRequiredArgument):
+    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing a required argument: {error.param}"
+    #     elif isinstance(error, commands.ConversionError):
+    #         message = str(error)
+    #     elif isinstance(error, commands.CommandNotFound):
+    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Command not found"
+    #     else:
+    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Unable to debug"
 
-        print(message)
+    #     print(message)
     
     @bot.event
     async def on_command(ctx):
@@ -63,7 +63,7 @@ class Commands(commands.Cog):
     @commands.command()
     async def help(self, ctx):
         await ctx.message.delete()
-        await ctx.send(f"```ini\n[utils] utilities\n[fun] fun stuff\n[encryption] encrypt stuff\n[activity] choose activity\n[nsfw] self explanitory\n[crypto] check cryptocurrency prices\n[changelog] check updates\n\n[{watermark}]```", delete_after=8)
+        await ctx.send(f"```ini\n[utils] utilities\n[fun] fun stuff\n[encryption] encrypt stuff\n[activity] choose activity\n[crypto] check cryptocurrency prices\n[changelog] check updates\n\n[{watermark}]```", delete_after=8)
 
     @commands.command()
     async def changelog(self, ctx):
@@ -73,7 +73,7 @@ class Commands(commands.Cog):
     @commands.command(aliases=["tools"])
     async def utils(self, ctx):
         await ctx.message.delete()
-        await ctx.send(f"```ini\n[ascii] text to ascii\n[online / offline] checks self bot status\n[cl] cleares messsages\n[ping] checks ping\n[whois] grabs someone registration date\n[lastMessage] find someone's last message\n[timeNow] shows timezones\n[convertTime] convert times between timezones\n\n[{watermark}]```", delete_after=8)
+        await ctx.send(f"```ini\n[ascii] (text)\n[online / offline] (no args)\n[cl] (ammount)\n[ping] no args\n[whois] (user)\n[lastMessage] (user)\n[timeNow] no args\n[convertTime] no args\n[spam] (ammount) (message)\n\n[{watermark}]```", delete_after=8)
 
     @commands.command()
     async def ascii(self, ctx, *, text: str = None):
@@ -92,9 +92,26 @@ class Commands(commands.Cog):
                     await ctx.send(f"Error: {e}", delete_after=8)
 
     @commands.command()
-    async def online(self, ctx):
+    async def pfp(self, ctx, member: discord.User = None):
+        if not member:
+            member = ctx.author
+        await ctx.send(member.avatar_url)
+
+    @commands.command()
+    async def spam(self, ctx, amount: int, *, message):
+
+        now = datetime.now()
+        current_time = now.strftime("%H:%M")
+
         await ctx.message.delete()
-        await ctx.send(f"```ini\nTMG is online\n\n[{watermark}]```", delete_after=8)
+        for i in range(0, amount):
+            try:
+                await ctx.send(message)
+            except:
+                continue
+        
+        await ctx.send(f"```ini\n[Function] Spam\n[Message] {message}\n[Amount] {amount}\n\n[{watermark}]```", delete_after=8)
+        print(f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[Spam] {colorama.Fore.RESET}Spammed {amount} messages in {ctx.guild}")
 
     @commands.command()
     async def offline(self, ctx):
@@ -119,10 +136,28 @@ class Commands(commands.Cog):
         async for message in ctx.message.channel.history(limit=amount).filter(lambda m: m.author == self.bot.user).map(lambda m: m):
             try:
                 await message.delete()
-            except:
+            except discord.Forbidden:
+                try:
+                    await message.delete()
+                except discord.Forbidden:
+                    pass
+            except discord.HTTPException:
                 await asyncio.sleep(10)
                 await message.delete()
+                
+        await ctx.send(f"```ini\n[Function] Purge\n[Amount] {amount}\n\n[{watermark}]```", delete_after=8)
         print(f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[Clear] {colorama.Fore.RESET}Deleted {amount} messages in {ctx.guild}")
+
+    # @commands.command()
+    # async def lockgc(self, ctx, user = discord.Member):
+
+
+    # @commands.command()
+    # async def unlockgc(self, ctx, user = discord.Member):
+
+
+    # @commands.command()
+    # async def whitelist(self, ctx, user = discord.Member):
 
     @commands.command()
     async def ping(self, ctx):
@@ -188,12 +223,13 @@ class Commands(commands.Cog):
 
         with open('logs.json', 'r') as file:
             user_list = json.load(file)
-        members = await self.guild.fetch_members(limit=150).flatten()
+        members = await ctx.guild.fetch_members(limit=150).flatten()
         for member in members:
             user_list.append(member.id)
         with open('logs.json', 'w') as file:
             json.dump(user_list, file)
         print('Logged All Users!')
+        await ctx.send("Logged All Users!")
 
     @commands.command()
     async def lastMessage(self, ctx, users_id: int):

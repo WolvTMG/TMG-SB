@@ -62,7 +62,7 @@ def main():
 
         if counter <= 0:
             SlowPrint("Loading ...")
-            time.sleep(2)
+            time.sleep(2.5)
             clear()
             counter = counter + 1
     

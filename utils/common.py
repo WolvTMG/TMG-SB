@@ -35,9 +35,10 @@ prefix = data["prefix"]
 bot = commands.Bot(command_prefix=prefix, self_bot=True)
 bot.remove_command("help")
 
-
 def tmg():  
     global theme
+    txt = f"Logged in as {bot.user.name} (ID: {bot.user.id} )"
+    log = txt.center(120)
 
     print(themes.theme + f"""
                             ████████╗███╗   ███╗ ██████╗               ███████╗██████╗ 
@@ -48,8 +49,8 @@ def tmg():
                                ╚═╝   ╚═╝     ╚═╝ ╚═════╝               ╚══════╝╚═════╝ 
                                                            
 
-                                                 Made by {colorama.Fore.RESET}WolvTMG#0001 """ +
-          themes.theme + f"""                                                                                     Logged in as {bot.user} (ID: {bot.user.id} )
+                                                 Made by {colorama.Fore.RESET}WolvTMG """ + themes.theme + f"""
+{log}
                                                                                                 (Prefix: {prefix} )
                                                                                                 (Guild Count: {len(bot.guilds)} )
                         [1] Start Script | [2] Update       | [3] Join Discord | [4] Threads
@@ -60,6 +61,8 @@ def tmg():
 
 def lau():
     global theme
+    txt = f"Logged in as {bot.user.name} (ID: {bot.user.id} )"
+    log = txt.center(120)
 
     print(themes.theme + f"""
                             ████████╗███╗   ███╗ ██████╗               ███████╗██████╗
@@ -69,8 +72,8 @@ def lau():
                                ██║   ██║ ╚═╝ ██║╚██████╔╝              ███████║██████╔╝
                                ╚═╝   ╚═╝     ╚═╝ ╚═════╝               ╚══════╝╚═════╝
 
-                                                 Made by {colorama.Fore.RESET}WolvTMG#0001 """ +
-          themes.theme + f"""                                                                                     Logged in as {bot.user} (ID: {bot.user.id} )                
+                                                 Made by {colorama.Fore.RESET}WolvTMG """ + themes.theme + f"""
+{log}            
                                                                                                 (Prefix: {prefix} )
                                                                                                 (Guild Count: {len(bot.guilds)} )
                                                                 
