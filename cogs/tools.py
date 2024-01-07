@@ -38,26 +38,26 @@ class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # @commands.Cog.listener()
-    # async def on_command_error(self, ctx: commands.Context, error: commands.CommandError):
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx: commands.Context, error: commands.CommandError):
         
-    #     now = datetime.now()
-    #     current_time = now.strftime("%H:%M")
+        now = datetime.now()
+        current_time = now.strftime("%H:%M")
         
-    #     if isinstance(error, commands.CommandOnCooldown):
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET} Cooldown: {round(error.retry_after, 1)} seconds"
-    #     elif isinstance(error, commands.MissingPermissions):
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing permissions"
-    #     elif isinstance(error, commands.MissingRequiredArgument):
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing a required argument: {error.param}"
-    #     elif isinstance(error, commands.ConversionError):
-    #         message = str(error)
-    #     elif isinstance(error, commands.CommandNotFound):
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Command not found"
-    #     else:
-    #         message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Unable to debug"
+        if isinstance(error, commands.CommandOnCooldown):
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET} Cooldown: {round(error.retry_after, 1)} seconds"
+        elif isinstance(error, commands.MissingPermissions):
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing permissions"
+        elif isinstance(error, commands.MissingRequiredArgument):
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Missing a required argument: {error.param}"
+        elif isinstance(error, commands.ConversionError):
+            message = str(error)
+        elif isinstance(error, commands.CommandNotFound):
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Command not found"
+        else:
+            message = f"{colorama.Fore.RESET}[{current_time}] {colorama.Fore.RED}[ERROR] {colorama.Fore.RESET}Unable to debug"
 
-    #     print(message)
+        print(message)
     
     @bot.event
     async def on_command(ctx):
@@ -269,7 +269,7 @@ class Commands(commands.Cog):
         gpu_temp = get_gpu_temperature()
 
         if gpu_temp:
-            await ctx.send(f"```ini\n[GPU]\nTemp: {gpu_temp}°C\n\n[{watermark}]")
+            await ctx.send(f"```ini\n[GPU]\nTemp: {gpu_temp}°C\n\n[{watermark}]```")
         else:
             await ctx.send("Unable to retrieve GPU temperature.")
 
@@ -332,8 +332,9 @@ class Commands(commands.Cog):
         storage_free = bytes_to_gb(storage_free)
 
         os_name = platform.system()
+        os_version = platform.release()
 
-        await ctx.send(f"```ini\n[CPU Information]\nCPU: {cpu_name}\nCPU Processor: {cpu_processor}\nCPU Usage: {cpu_usage}\n\n[GPU Information]\nGPU: {gpu_name}\nGPU Memory: {math.ceil(gpu_memory)} GB\nGPU Memory Used: {math.ceil(gpu_memoryused)} GB\nGPU Memory Free: {math.ceil(gpu_memoryfree)} GB\n\n[RAM Information]\nRAM Ammount: {math.ceil(ram_total)} GB\nRAM Available: {math.ceil(ram_available)} GB\n\n[Storage Information]\nStorage Ammount: {math.ceil(storage_total)} GB\nStorage Used: {math.ceil(storage_used)} GB\nStorage Free: {math.ceil(storage_free)} GB\nOS (Operating System): {os_name}\n\n[{watermark}]```")
+        await ctx.send(f"```ini\n[CPU Information]\nCPU: {cpu_name}\nCPU Processor: {cpu_processor}\nCPU Usage: {cpu_usage}\n\n[GPU Information]\nGPU: {gpu_name}\nGPU Memory: {math.ceil(gpu_memory)} GB\nGPU Memory Used: {math.ceil(gpu_memoryused)} GB\nGPU Memory Free: {math.ceil(gpu_memoryfree)} GB\n\n[RAM Information]\nRAM Ammount: {math.ceil(ram_total)} GB\nRAM Available: {math.ceil(ram_available)} GB\n\n[Storage Information]\nStorage Ammount: {math.ceil(storage_total)} GB\nStorage Used: {math.ceil(storage_used)} GB\nStorage Free: {math.ceil(storage_free)} GB\n\n[Operating System]\nOS: {os_name} {os_version}\n\n[{watermark}]```")
 
     @commands.command()
     async def timeNow(self, ctx):
