@@ -11,6 +11,6 @@
 
 For educational purposes only
 
-Discord: WolvTMG#0766
+Discord: WolvTMG
 
 Website: https://tmgmidvite.com
