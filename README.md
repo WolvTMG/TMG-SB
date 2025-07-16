@@ -1,4 +1,4 @@
-<p align= center></p><a href="https://tmgmidvite.com" target="_blank"><img src="https://raw.githubusercontent.com/WolvTMG/images/main/tmgmidvite.png" alt="TMG"></a>
+<p align= center></p><a href="https://tmgmidvite.com" target="_blank"><img src="https://raw.githubusercontent.com/WolvTMG/images/refs/heads/main/tmgmidvite.png?token=GHSAT0AAAAAADHPCWFSPHRJWFK5QLJD5EU42DXXTYA" alt="TMG"></a>
 
 ---
 * ` Settings (Color Theme, Prefix Choice)`
